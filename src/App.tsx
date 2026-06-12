@@ -5,6 +5,7 @@ import { ATSResume } from './templates/ATSResume';
 import type { ResumeData, Language } from './types/resume';
 import { FileText, Download, Eye, Edit3 } from 'lucide-react';
 import { translations } from './i18n/translations';
+import { Container, Navbar, Nav, Button, Row, Col, Card, ButtonGroup } from 'react-bootstrap';
 
 const initialData: ResumeData = {
   personalInfo: {
@@ -37,72 +38,77 @@ function App() {
   }, [data]);
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
+    <div className="bg-light min-vh-100">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3 sm:px-8 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <div className="bg-blue-600 p-2 rounded-lg">
-            <FileText className="text-white" size={24} />
-          </div>
-          <h1 className="text-xl font-bold tracking-tight hidden sm:block">{t.title}</h1>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* Mobile Toggle */}
-          <div className="flex sm:hidden bg-gray-100 p-1 rounded-lg">
-            <button
-              onClick={() => setView('edit')}
-              className={`p-2 rounded-md transition-all ${view === 'edit' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500'}`}
-            >
-              <Edit3 size={20} />
-            </button>
-            <button
-              onClick={() => setView('preview')}
-              className={`p-2 rounded-md transition-all ${view === 'preview' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500'}`}
-            >
-              <Eye size={20} />
-            </button>
-          </div>
-
-          <PDFDownloadLink
-            document={<ATSResume data={data} lang={lang} />}
-            fileName={`resume_${data.personalInfo.fullName.replace(/\s+/g, '_') || 'generator'}.pdf`}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-sm"
-          >
-            {({ loading }) => (
-              <>
-                <Download size={18} />
-                <span className="hidden sm:inline">{loading ? '...' : t.download}</span>
-              </>
-            )}
-          </PDFDownloadLink>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto p-4 sm:p-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Form Section */}
-        <div className={`${view === 'edit' ? 'block' : 'hidden'} lg:block`}>
-          <ResumeForm data={data} setData={setData} lang={lang} setLang={setLang} />
-        </div>
-
-        {/* Preview Section */}
-        <div className={`${view === 'preview' ? 'block' : 'hidden'} lg:block lg:sticky lg:top-24 h-[calc(100vh-8rem)]`}>
-          <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden h-full flex flex-col">
-            <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
-              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{t.preview}</span>
+      <Navbar bg="white" expand="lg" sticky="top" className="border-bottom shadow-sm px-3 py-2">
+        <Container fluid>
+          <Navbar.Brand className="d-flex align-items-center gap-2">
+            <div className="bg-primary p-2 rounded text-white d-flex align-items-center justify-content-center">
+              <FileText size={24} />
             </div>
-            <div className="flex-1 bg-gray-200 overflow-auto p-4 flex justify-center">
-              <div className="w-full h-full min-h-[500px] lg:min-h-0 bg-white shadow-2xl origin-top transition-transform">
-                <PDFViewer width="100%" height="100%" showToolbar={false} className="border-none">
-                  <ATSResume data={data} lang={lang} />
-                </PDFViewer>
-              </div>
+            <span className="fw-bold d-none d-sm-inline">{t.title}</span>
+          </Navbar.Brand>
+
+          <Nav className="ms-auto d-flex flex-row align-items-center gap-2">
+            {/* Mobile Toggle */}
+            <ButtonGroup className="d-sm-none me-2">
+              <Button
+                variant={view === 'edit' ? 'primary' : 'outline-secondary'}
+                onClick={() => setView('edit')}
+                size="sm"
+              >
+                <Edit3 size={18} />
+              </Button>
+              <Button
+                variant={view === 'preview' ? 'primary' : 'outline-secondary'}
+                onClick={() => setView('preview')}
+                size="sm"
+              >
+                <Eye size={18} />
+              </Button>
+            </ButtonGroup>
+
+            <PDFDownloadLink
+              document={<ATSResume data={data} lang={lang} />}
+              fileName={`resume_${data.personalInfo.fullName.replace(/\s+/g, '_') || 'generator'}.pdf`}
+            >
+              {({ loading }) => (
+                <Button variant="primary" className="d-flex align-items-center gap-2 fw-semibold shadow-sm">
+                  <Download size={18} />
+                  <span className="d-none d-sm-inline">{loading ? '...' : t.download}</span>
+                </Button>
+              )}
+            </PDFDownloadLink>
+          </Nav>
+        </Container>
+      </Navbar>
+
+      <Container fluid="xl" className="py-4 py-md-5">
+        <Row className="g-4">
+          {/* Form Section */}
+          <Col lg={6} className={`${view === 'edit' ? 'd-block' : 'd-none'} d-lg-block`}>
+            <ResumeForm data={data} setData={setData} lang={lang} setLang={setLang} />
+          </Col>
+
+          {/* Preview Section */}
+          <Col lg={6} className={`${view === 'preview' ? 'd-block' : 'd-none'} d-lg-block`}>
+            <div className="sticky-top" style={{ top: '5rem', height: 'calc(100vh - 8rem)' }}>
+              <Card className="shadow h-100 overflow-hidden">
+                <Card.Header className="bg-light d-flex justify-content-between align-items-center py-2 px-3">
+                  <span className="text-muted small fw-bold text-uppercase tracking-wider">{t.preview}</span>
+                </Card.Header>
+                <Card.Body className="p-0 bg-secondary bg-opacity-10 overflow-auto d-flex justify-content-center">
+                  <div className="w-100 h-100 bg-white shadow" style={{ minHeight: '500px' }}>
+                    <PDFViewer width="100%" height="100%" showToolbar={false} style={{ border: 'none' }}>
+                      <ATSResume data={data} lang={lang} />
+                    </PDFViewer>
+                  </div>
+                </Card.Body>
+              </Card>
             </div>
-          </div>
-        </div>
-      </main>
-      
-      {/* Mobile Footer (Optional, but could show download status) */}
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }

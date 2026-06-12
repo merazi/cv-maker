@@ -2,6 +2,7 @@ import React from 'react';
 import type { ResumeData, Language } from '../types/resume';
 import { translations } from '../i18n/translations';
 import { Plus, Trash2, Globe, User, Briefcase, GraduationCap, Code, Languages, Folder } from 'lucide-react';
+import { Form, Row, Col, Card, Button, InputGroup, Badge } from 'react-bootstrap';
 
 interface Props {
   data: ResumeData;
@@ -63,381 +64,436 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) =>
   };
 
   return (
-    <div className="space-y-8 pb-20">
+    <div className="pb-5">
       {/* Language Switcher */}
-      <div className="flex justify-end items-center gap-2 mb-4">
-        <Globe size={18} className="text-gray-500" />
-        <select
+      <div className="d-flex justify-content-end align-items-center gap-2 mb-4">
+        <Globe size={18} className="text-muted" />
+        <Form.Select
+          size="sm"
+          style={{ width: 'auto' }}
           value={lang}
           onChange={(e) => setLang(e.target.value as Language)}
-          className="bg-white border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
         >
           <option value="en">English</option>
           <option value="es">Español</option>
-        </select>
+        </Form.Select>
       </div>
 
       {/* Personal Info */}
-      <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <div className="flex items-center gap-2 mb-4">
-          <User className="text-blue-600" size={20} />
-          <h2 className="text-lg font-bold text-gray-800">{t.personalInfo}</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.fullName}</label>
-            <input
-              type="text"
-              value={data.personalInfo.fullName}
-              onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-              className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="John Doe"
-            />
+      <Card className="mb-4 shadow-sm border-0">
+        <Card.Body className="p-4">
+          <div className="d-flex align-items-center gap-2 mb-4">
+            <User className="text-primary" size={20} />
+            <h5 className="mb-0 fw-bold text-dark">{t.personalInfo}</h5>
           </div>
-          <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.email}</label>
-            <input
-              type="email"
-              value={data.personalInfo.email}
-              onChange={(e) => updatePersonalInfo('email', e.target.value)}
-              className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="john@example.com"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.phone}</label>
-            <input
-              type="text"
-              value={data.personalInfo.phone}
-              onChange={(e) => updatePersonalInfo('phone', e.target.value)}
-              className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="+1 234 567 890"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.location}</label>
-            <input
-              type="text"
-              value={data.personalInfo.location}
-              onChange={(e) => updatePersonalInfo('location', e.target.value)}
-              className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="City, Country"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.website}</label>
-            <input
-              type="text"
-              value={data.personalInfo.website}
-              onChange={(e) => updatePersonalInfo('website', e.target.value)}
-              className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="https://portfolio.com"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.linkedin}</label>
-            <input
-              type="text"
-              value={data.personalInfo.linkedin}
-              onChange={(e) => updatePersonalInfo('linkedin', e.target.value)}
-              className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-              placeholder="linkedin.com/in/johndoe"
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.summary}</label>
-            <textarea
-              value={data.personalInfo.summary}
-              onChange={(e) => updatePersonalInfo('summary', e.target.value)}
-              rows={3}
-              className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-              placeholder="A brief overview of your professional background..."
-            />
-          </div>
-        </div>
-      </section>
+          <Row className="g-3">
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.fullName}</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={data.personalInfo.fullName}
+                  onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
+                  placeholder="John Doe"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.email}</Form.Label>
+                <Form.Control
+                  type="email"
+                  value={data.personalInfo.email}
+                  onChange={(e) => updatePersonalInfo('email', e.target.value)}
+                  placeholder="john@example.com"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.phone}</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={data.personalInfo.phone}
+                  onChange={(e) => updatePersonalInfo('phone', e.target.value)}
+                  placeholder="+1 234 567 890"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.location}</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={data.personalInfo.location}
+                  onChange={(e) => updatePersonalInfo('location', e.target.value)}
+                  placeholder="City, Country"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.website}</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={data.personalInfo.website}
+                  onChange={(e) => updatePersonalInfo('website', e.target.value)}
+                  placeholder="https://portfolio.com"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.linkedin}</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={data.personalInfo.linkedin}
+                  onChange={(e) => updatePersonalInfo('linkedin', e.target.value)}
+                  placeholder="linkedin.com/in/johndoe"
+                />
+              </Form.Group>
+            </Col>
+            <Col xs={12}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.summary}</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={data.personalInfo.summary}
+                  onChange={(e) => updatePersonalInfo('summary', e.target.value)}
+                  placeholder="A brief overview of your professional background..."
+                  style={{ resize: 'none' }}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
 
       {/* Experience */}
-      <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Briefcase className="text-blue-600" size={20} />
-            <h2 className="text-lg font-bold text-gray-800">{t.experience}</h2>
+      <Card className="mb-4 shadow-sm border-0">
+        <Card.Body className="p-4">
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <div className="d-flex align-items-center gap-2">
+              <Briefcase className="text-primary" size={20} />
+              <h5 className="mb-0 fw-bold text-dark">{t.experience}</h5>
+            </div>
+            <Button
+              variant="light"
+              className="rounded-circle p-2 text-primary"
+              onClick={() => addItem('experience')}
+            >
+              <Plus size={20} />
+            </Button>
           </div>
-          <button
-            onClick={() => addItem('experience')}
-            className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
-          >
-            <Plus size={20} />
-          </button>
-        </div>
-        <div className="space-y-6">
-          {data.experience.map((exp, index) => (
-            <div key={index} className="p-4 border border-gray-100 rounded-lg relative group">
-              <button
-                onClick={() => removeItem('experience', index)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
-              >
-                <Trash2 size={18} />
-              </button>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.company}</label>
-                  <input
-                    type="text"
-                    value={exp.company}
-                    onChange={(e) => updateItem('experience', index, 'company', e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.position}</label>
-                  <input
-                    type="text"
-                    value={exp.position}
-                    onChange={(e) => updateItem('experience', index, 'position', e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex-1">
-                    <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.startDate}</label>
-                    <input
-                      type="text"
-                      value={exp.startDate}
-                      onChange={(e) => updateItem('experience', index, 'startDate', e.target.value)}
-                      className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="MM/YYYY"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.endDate}</label>
-                    <input
-                      type="text"
-                      value={exp.endDate}
-                      disabled={exp.current}
-                      onChange={(e) => updateItem('experience', index, 'endDate', e.target.value)}
-                      className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-50"
-                      placeholder="MM/YYYY"
-                    />
-                  </div>
-                </div>
-                <div className="flex items-end pb-2">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
+          <div className="d-flex flex-column gap-4">
+            {data.experience.map((exp, index) => (
+              <div key={index} className="p-3 border rounded position-relative">
+                <Button
+                  variant="link"
+                  className="position-absolute top-0 end-0 mt-2 me-2 text-muted p-0"
+                  onClick={() => removeItem('experience', index)}
+                >
+                  <Trash2 size={18} />
+                </Button>
+                <Row className="g-3">
+                  <Col md={6}>
+                    <Form.Group>
+                      <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.company}</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={exp.company}
+                        onChange={(e) => updateItem('experience', index, 'company', e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group>
+                      <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.position}</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={exp.position}
+                        onChange={(e) => updateItem('experience', index, 'position', e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Row className="g-2">
+                      <Col>
+                        <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.startDate}</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={exp.startDate}
+                          onChange={(e) => updateItem('experience', index, 'startDate', e.target.value)}
+                          placeholder="MM/YYYY"
+                        />
+                      </Col>
+                      <Col>
+                        <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.endDate}</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={exp.endDate}
+                          disabled={exp.current}
+                          onChange={(e) => updateItem('experience', index, 'endDate', e.target.value)}
+                          placeholder="MM/YYYY"
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                  <Col md={6} className="d-flex align-items-end">
+                    <Form.Check
                       type="checkbox"
+                      label={t.current}
                       checked={exp.current}
                       onChange={(e) => updateItem('experience', index, 'current', e.target.checked)}
-                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      id={`current-${index}`}
+                      className="mb-2"
                     />
-                    <span className="text-sm text-gray-600">{t.current}</span>
-                  </label>
-                </div>
-                <div className="md:col-span-2">
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.description}</label>
-                  <textarea
-                    value={exp.description}
-                    onChange={(e) => updateItem('experience', index, 'description', e.target.value)}
-                    rows={3}
-                    className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                  />
-                </div>
+                  </Col>
+                  <Col xs={12}>
+                    <Form.Group>
+                      <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.description}</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        value={exp.description}
+                        onChange={(e) => updateItem('experience', index, 'description', e.target.value)}
+                        style={{ resize: 'none' }}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </Card.Body>
+      </Card>
 
       {/* Education */}
-      <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="text-blue-600" size={20} />
-            <h2 className="text-lg font-bold text-gray-800">{t.education}</h2>
-          </div>
-          <button
-            onClick={() => addItem('education')}
-            className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
-          >
-            <Plus size={20} />
-          </button>
-        </div>
-        <div className="space-y-6">
-          {data.education.map((edu, index) => (
-            <div key={index} className="p-4 border border-gray-100 rounded-lg relative">
-              <button
-                onClick={() => removeItem('education', index)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
-              >
-                <Trash2 size={18} />
-              </button>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="md:col-span-2">
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.school}</label>
-                  <input
-                    type="text"
-                    value={edu.school}
-                    onChange={(e) => updateItem('education', index, 'school', e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.degree}</label>
-                  <input
-                    type="text"
-                    value={edu.degree}
-                    onChange={(e) => updateItem('education', index, 'degree', e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex-1">
-                    <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.startDate}</label>
-                    <input
-                      type="text"
-                      value={edu.startDate}
-                      onChange={(e) => updateItem('education', index, 'startDate', e.target.value)}
-                      className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.endDate}</label>
-                    <input
-                      type="text"
-                      value={edu.endDate}
-                      onChange={(e) => updateItem('education', index, 'endDate', e.target.value)}
-                      className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-                </div>
-              </div>
+      <Card className="mb-4 shadow-sm border-0">
+        <Card.Body className="p-4">
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <div className="d-flex align-items-center gap-2">
+              <GraduationCap className="text-primary" size={20} />
+              <h5 className="mb-0 fw-bold text-dark">{t.education}</h5>
             </div>
-          ))}
-        </div>
-      </section>
+            <Button
+              variant="light"
+              className="rounded-circle p-2 text-primary"
+              onClick={() => addItem('education')}
+            >
+              <Plus size={20} />
+            </Button>
+          </div>
+          <div className="d-flex flex-column gap-4">
+            {data.education.map((edu, index) => (
+              <div key={index} className="p-3 border rounded position-relative">
+                <Button
+                  variant="link"
+                  className="position-absolute top-0 end-0 mt-2 me-2 text-muted p-0"
+                  onClick={() => removeItem('education', index)}
+                >
+                  <Trash2 size={18} />
+                </Button>
+                <Row className="g-3">
+                  <Col xs={12}>
+                    <Form.Group>
+                      <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.school}</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={edu.school}
+                        onChange={(e) => updateItem('education', index, 'school', e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group>
+                      <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.degree}</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={edu.degree}
+                        onChange={(e) => updateItem('education', index, 'degree', e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Row className="g-2">
+                      <Col>
+                        <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.startDate}</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={edu.startDate}
+                          onChange={(e) => updateItem('education', index, 'startDate', e.target.value)}
+                        />
+                      </Col>
+                      <Col>
+                        <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.endDate}</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={edu.endDate}
+                          onChange={(e) => updateItem('education', index, 'endDate', e.target.value)}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </div>
+            ))}
+          </div>
+        </Card.Body>
+      </Card>
 
       {/* Skills & Languages */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Code className="text-blue-600" size={20} />
-              <h2 className="text-lg font-bold text-gray-800">{t.skills}</h2>
-            </div>
-            <button
-              onClick={() => addItem('skills')}
-              className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
-            >
-              <Plus size={16} />
-            </button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {data.skills.map((skill, index) => (
-              <div key={index} className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-md px-2 py-1">
-                <input
-                  type="text"
-                  value={skill}
-                  onChange={(e) => updateItem('skills', index, '', e.target.value)}
-                  className="bg-transparent border-none outline-none text-sm w-24"
-                  placeholder="React"
-                />
-                <button onClick={() => removeItem('skills', index)} className="text-gray-400 hover:text-red-500">
-                  <Trash2 size={14} />
-                </button>
+      <Row className="g-4 mb-4">
+        <Col md={6}>
+          <Card className="h-100 shadow-sm border-0">
+            <Card.Body className="p-4">
+              <div className="d-flex align-items-center justify-content-between mb-4">
+                <div className="d-flex align-items-center gap-2">
+                  <Code className="text-primary" size={20} />
+                  <h5 className="mb-0 fw-bold text-dark">{t.skills}</h5>
+                </div>
+                <Button
+                  variant="light"
+                  className="rounded-circle p-1 text-primary"
+                  onClick={() => addItem('skills')}
+                >
+                  <Plus size={16} />
+                </Button>
               </div>
-            ))}
-          </div>
-        </section>
+              <div className="d-flex flex-wrap gap-2">
+                {data.skills.map((skill, index) => (
+                  <InputGroup key={index} size="sm" style={{ width: 'auto' }}>
+                    <Form.Control
+                      type="text"
+                      value={skill}
+                      onChange={(e) => updateItem('skills', index, '', e.target.value)}
+                      placeholder="React"
+                      className="bg-light border-0"
+                      style={{ width: '80px' }}
+                    />
+                    <Button
+                      variant="light"
+                      className="border-0"
+                      onClick={() => removeItem('skills', index)}
+                    >
+                      <Trash2 size={14} className="text-danger" />
+                    </Button>
+                  </InputGroup>
+                ))}
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
 
-        <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Languages className="text-blue-600" size={20} />
-              <h2 className="text-lg font-bold text-gray-800">{t.languages}</h2>
-            </div>
-            <button
-              onClick={() => addItem('languages')}
-              className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
-            >
-              <Plus size={16} />
-            </button>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {data.languages.map((langItem, index) => (
-              <div key={index} className="flex items-center gap-1 bg-gray-50 border border-gray-200 rounded-md px-2 py-1">
-                <input
-                  type="text"
-                  value={langItem}
-                  onChange={(e) => updateItem('languages', index, '', e.target.value)}
-                  className="bg-transparent border-none outline-none text-sm w-24"
-                  placeholder="English"
-                />
-                <button onClick={() => removeItem('languages', index)} className="text-gray-400 hover:text-red-500">
-                  <Trash2 size={14} />
-                </button>
+        <Col md={6}>
+          <Card className="h-100 shadow-sm border-0">
+            <Card.Body className="p-4">
+              <div className="d-flex align-items-center justify-content-between mb-4">
+                <div className="d-flex align-items-center gap-2">
+                  <Languages className="text-primary" size={20} />
+                  <h5 className="mb-0 fw-bold text-dark">{t.languages}</h5>
+                </div>
+                <Button
+                  variant="light"
+                  className="rounded-circle p-1 text-primary"
+                  onClick={() => addItem('languages')}
+                >
+                  <Plus size={16} />
+                </Button>
               </div>
-            ))}
-          </div>
-        </section>
-      </div>
+              <div className="d-flex flex-wrap gap-2">
+                {data.languages.map((langItem, index) => (
+                  <InputGroup key={index} size="sm" style={{ width: 'auto' }}>
+                    <Form.Control
+                      type="text"
+                      value={langItem}
+                      onChange={(e) => updateItem('languages', index, '', e.target.value)}
+                      placeholder="English"
+                      className="bg-light border-0"
+                      style={{ width: '80px' }}
+                    />
+                    <Button
+                      variant="light"
+                      className="border-0"
+                      onClick={() => removeItem('languages', index)}
+                    >
+                      <Trash2 size={14} className="text-danger" />
+                    </Button>
+                  </InputGroup>
+                ))}
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
 
       {/* Projects */}
-      <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Folder className="text-blue-600" size={20} />
-            <h2 className="text-lg font-bold text-gray-800">{t.projects}</h2>
-          </div>
-          <button
-            onClick={() => addItem('projects')}
-            className="p-2 bg-blue-50 text-blue-600 rounded-full hover:bg-blue-100 transition-colors"
-          >
-            <Plus size={20} />
-          </button>
-        </div>
-        <div className="space-y-6">
-          {data.projects.map((project, index) => (
-            <div key={index} className="p-4 border border-gray-100 rounded-lg relative">
-              <button
-                onClick={() => removeItem('projects', index)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
-              >
-                <Trash2 size={18} />
-              </button>
-              <div className="grid grid-cols-1 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.projectName}</label>
-                  <input
-                    type="text"
-                    value={project.name}
-                    onChange={(e) => updateItem('projects', index, 'name', e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.link}</label>
-                  <input
-                    type="text"
-                    value={project.link}
-                    onChange={(e) => updateItem('projects', index, 'link', e.target.value)}
-                    className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="https://github.com/..."
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-gray-500 uppercase mb-1">{t.description}</label>
-                  <textarea
-                    value={project.description}
-                    onChange={(e) => updateItem('projects', index, 'description', e.target.value)}
-                    rows={2}
-                    className="w-full p-2 border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 outline-none resize-none"
-                  />
-                </div>
-              </div>
+      <Card className="shadow-sm border-0">
+        <Card.Body className="p-4">
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <div className="d-flex align-items-center gap-2">
+              <Folder className="text-primary" size={20} />
+              <h5 className="mb-0 fw-bold text-dark">{t.projects}</h5>
             </div>
-          ))}
-        </div>
-      </section>
+            <Button
+              variant="light"
+              className="rounded-circle p-2 text-primary"
+              onClick={() => addItem('projects')}
+            >
+              <Plus size={20} />
+            </Button>
+          </div>
+          <div className="d-flex flex-column gap-4">
+            {data.projects.map((project, index) => (
+              <div key={index} className="p-3 border rounded position-relative">
+                <Button
+                  variant="link"
+                  className="position-absolute top-0 end-0 mt-2 me-2 text-muted p-0"
+                  onClick={() => removeItem('projects', index)}
+                >
+                  <Trash2 size={18} />
+                </Button>
+                <Row className="g-3">
+                  <Col xs={12}>
+                    <Form.Group>
+                      <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.projectName}</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={project.name}
+                        onChange={(e) => updateItem('projects', index, 'name', e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={12}>
+                    <Form.Group>
+                      <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.link}</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={project.link}
+                        onChange={(e) => updateItem('projects', index, 'link', e.target.value)}
+                        placeholder="https://github.com/..."
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col xs={12}>
+                    <Form.Group>
+                      <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.description}</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={2}
+                        value={project.description}
+                        onChange={(e) => updateItem('projects', index, 'description', e.target.value)}
+                        style={{ resize: 'none' }}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+              </div>
+            ))}
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 };
