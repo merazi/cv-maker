@@ -2,7 +2,7 @@ import React from 'react';
 import type { ResumeData, Language } from '../types/resume';
 import { translations } from '../i18n/translations';
 import { Plus, Trash2, Globe, User, Briefcase, GraduationCap, Code, Languages, Folder } from 'lucide-react';
-import { Form, Row, Col, Card, Button, InputGroup, Badge } from 'react-bootstrap';
+import { Form, Row, Col, Card, Button, InputGroup } from 'react-bootstrap';
 
 interface Props {
   data: ResumeData;
