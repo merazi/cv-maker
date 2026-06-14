@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     lineHeight: 1.5,
   },
   header: {
-    marginBottom: 20,
+    marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
   headerContent: {
     flex: 1,
     borderBottomWidth: 1,
-    paddingBottom: 10,
+    paddingBottom: 8,
   },
   photo: {
-    width: 80,
-    height: 80,
+    width: 65,
+    height: 65,
     borderRadius: 5,
     marginLeft: 10,
   },
