@@ -8,10 +8,9 @@ interface Props {
   data: ResumeData;
   setData: React.Dispatch<React.SetStateAction<ResumeData>>;
   lang: Language;
-  setLang: (lang: Language) => void;
 }
 
-export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) => {
+export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
   const t = translations[lang];
 
   const updatePersonalInfo = (field: keyof ResumeData['personalInfo'], value: any) => {

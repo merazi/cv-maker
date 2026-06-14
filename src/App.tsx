@@ -127,7 +127,7 @@ function App() {
         <Row className="g-4">
           {/* Form Section */}
           <Col lg={6} className={`${view === 'edit' ? 'd-block' : 'd-none'} d-lg-block`}>
-            <ResumeForm data={data} setData={setData} lang={lang} setLang={setLang} />
+            <ResumeForm data={data} setData={setData} lang={lang} />
           </Col>
 
           {/* Preview Section */}
