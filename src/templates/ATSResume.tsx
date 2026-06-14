@@ -133,7 +133,7 @@ export const ATSResume = ({ data, lang }: Props) => {
               {data.personalInfo.linkedin && <Text>{data.personalInfo.linkedin}</Text>}
             </View>
           </View>
-          {data.personalInfo.photo && (
+          {data.personalInfo.photo && data.personalInfo.showPhoto !== false && (
             <Image src={data.personalInfo.photo} style={styles.photo} />
           )}
         </View>

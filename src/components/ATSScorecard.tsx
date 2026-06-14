@@ -138,7 +138,7 @@ export const ATSScorecard: React.FC<Props> = ({ data, lang }) => {
   }
 
   // 7. Profile Photo Warning (Important for ATS)
-  if (data.personalInfo.photo && data.personalInfo.photo !== '') {
+  if (data.personalInfo.photo && data.personalInfo.photo !== '' && data.personalInfo.showPhoto !== false) {
     checks.push({
       id: 'photo',
       label: lang === 'en' ? 'Profile Picture' : 'Foto de Perfil',
@@ -152,7 +152,9 @@ export const ATSScorecard: React.FC<Props> = ({ data, lang }) => {
       id: 'photo',
       label: lang === 'en' ? 'Profile Picture' : 'Foto de Perfil',
       status: 'success',
-      message: lang === 'en' ? 'No profile picture included (Optimal for ATS parsing).' : 'Sin foto de perfil (Óptimo para lectura de ATS).',
+      message: data.personalInfo.photo && data.personalInfo.photo !== ''
+        ? (lang === 'en' ? 'Profile picture is hidden (Optimal for ATS parsing).' : 'Foto de perfil oculta (Óptimo para lectura de ATS).')
+        : (lang === 'en' ? 'No profile picture included (Optimal for ATS parsing).' : 'Sin foto de perfil (Óptimo para lectura de ATS).'),
     });
   }
 

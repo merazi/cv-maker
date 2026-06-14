@@ -38,6 +38,7 @@ export interface ResumeData {
     linkedin: string;
     summary: string;
     photo?: string;
+    showPhoto?: boolean;
   };
   experience: Experience[];
   education: Education[];

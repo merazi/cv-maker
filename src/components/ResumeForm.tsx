@@ -14,7 +14,7 @@ interface Props {
 export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) => {
   const t = translations[lang];
 
-  const updatePersonalInfo = (field: keyof ResumeData['personalInfo'], value: string) => {
+  const updatePersonalInfo = (field: keyof ResumeData['personalInfo'], value: any) => {
     setData(prev => ({
       ...prev,
       personalInfo: { ...prev.personalInfo, [field]: value }
@@ -121,13 +121,44 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) =>
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group>
+              <Form.Group className="mb-3">
                 <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.photo}</Form.Label>
-                <Form.Control
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePhotoUpload}
-                />
+                {data.personalInfo.photo ? (
+                  <div className="d-flex align-items-center gap-3 p-2 border rounded bg-white">
+                    <img
+                      src={data.personalInfo.photo}
+                      alt="Profile preview"
+                      style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }}
+                    />
+                    <div className="flex-grow-1">
+                      <Form.Check
+                        type="switch"
+                        id="toggle-photo"
+                        label={lang === 'en' ? 'Show on CV' : 'Mostrar en CV'}
+                        checked={data.personalInfo.showPhoto !== false}
+                        onChange={(e) => updatePersonalInfo('showPhoto', e.target.checked)}
+                        style={{ fontSize: '0.85rem' }}
+                      />
+                    </div>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => {
+                        updatePersonalInfo('photo', '');
+                        updatePersonalInfo('showPhoto', true);
+                      }}
+                      className="d-flex align-items-center justify-content-center p-1.5"
+                    >
+                      <Trash2 size={16} />
+                    </Button>
+                  </div>
+                ) : (
+                  <Form.Control
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoUpload}
+                  />
+                )}
               </Form.Group>
             </Col>
             <Col md={6}>
