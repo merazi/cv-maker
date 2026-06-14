@@ -131,13 +131,44 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) =>
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group>
-                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.headerColor}</Form.Label>
+              <Form.Group className="mb-3">
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.headerTextColor}</Form.Label>
                 <Form.Control
                   type="color"
-                  value={data.headerColor || '#000000'}
-                  onChange={(e) => setData(prev => ({ ...prev, headerColor: e.target.value }))}
-                  title="Choose header color"
+                  value={data.headerTextColor || data.headerColor || '#000000'}
+                  onChange={(e) => setData(prev => ({
+                    ...prev,
+                    headerTextColor: e.target.value,
+                    headerColor: e.target.value
+                  }))}
+                  title={t.headerTextColor}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <div className="d-flex align-items-center justify-content-between mb-1">
+                  <Form.Label className="small fw-bold text-muted text-uppercase mb-0">{t.headerBgColor}</Form.Label>
+                  <Form.Check
+                    type="checkbox"
+                    id="use-header-bg"
+                    checked={!!data.headerBgColor && data.headerBgColor !== '#ffffff' && data.headerBgColor !== 'transparent'}
+                    onChange={(e) => {
+                      setData(prev => ({
+                        ...prev,
+                        headerBgColor: e.target.checked ? '#f3f4f6' : '#ffffff'
+                      }));
+                    }}
+                    style={{ fontSize: '0.8rem' }}
+                    label={t.useHeaderBg}
+                  />
+                </div>
+                <Form.Control
+                  type="color"
+                  value={data.headerBgColor && data.headerBgColor !== 'transparent' ? data.headerBgColor : '#ffffff'}
+                  disabled={!data.headerBgColor || data.headerBgColor === '#ffffff' || data.headerBgColor === 'transparent'}
+                  onChange={(e) => setData(prev => ({ ...prev, headerBgColor: e.target.value }))}
+                  title={t.headerBgColor}
                 />
               </Form.Group>
             </Col>

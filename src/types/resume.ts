@@ -45,6 +45,8 @@ export interface ResumeData {
   languages: string[];
   projects: Project[];
   headerColor?: string;
+  headerTextColor?: string;
+  headerBgColor?: string;
 }
 
 export type Language = 'en' | 'es';

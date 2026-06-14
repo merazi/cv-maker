@@ -23,6 +23,8 @@ const initialData: ResumeData = {
   languages: [],
   projects: [],
   headerColor: '#000000',
+  headerTextColor: '#000000',
+  headerBgColor: '#ffffff',
 };
 
 function App() {

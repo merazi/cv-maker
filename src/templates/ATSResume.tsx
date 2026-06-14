@@ -111,16 +111,21 @@ interface Props {
 
 export const ATSResume = ({ data, lang }: Props) => {
   const t = translations[lang];
-  const headerColor = data.headerColor || '#000';
+  const headerTextColor = data.headerTextColor || data.headerColor || '#000000';
+  const headerBgColor = data.headerBgColor || '#ffffff';
+  const hasBg = headerBgColor && headerBgColor.toLowerCase() !== '#ffffff' && headerBgColor.toLowerCase() !== '#fff' && headerBgColor.toLowerCase() !== 'transparent';
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
-        <View style={styles.header}>
-          <View style={[styles.headerContent, { borderBottomColor: headerColor }]}>
-            <Text style={[styles.name, { color: headerColor }]}>{data.personalInfo.fullName}</Text>
-            <View style={styles.contact}>
+        <View style={[
+          styles.header,
+          hasBg ? { backgroundColor: headerBgColor, padding: 12, borderRadius: 4 } : {}
+        ]}>
+          <View style={[styles.headerContent, { borderBottomColor: headerTextColor }]}>
+            <Text style={[styles.name, { color: headerTextColor }]}>{data.personalInfo.fullName}</Text>
+            <View style={[styles.contact, { color: hasBg ? headerTextColor : '#666' }]}>
               {data.personalInfo.email && <Text>{data.personalInfo.email}</Text>}
               {data.personalInfo.phone && <Text>{data.personalInfo.phone}</Text>}
               {data.personalInfo.location && <Text>{data.personalInfo.location}</Text>}
