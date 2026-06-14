@@ -22,13 +22,14 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 20,
-    borderBottomWidth: 1,
-    paddingBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
   headerContent: {
     flex: 1,
+    borderBottomWidth: 1,
+    paddingBottom: 10,
   },
   photo: {
     width: 80,
@@ -116,8 +117,8 @@ export const ATSResume = ({ data, lang }: Props) => {
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
-        <View style={[styles.header, { borderBottomColor: headerColor }]}>
-          <View style={styles.headerContent}>
+        <View style={styles.header}>
+          <View style={[styles.headerContent, { borderBottomColor: headerColor }]}>
             <Text style={[styles.name, { color: headerColor }]}>{data.personalInfo.fullName}</Text>
             <View style={styles.contact}>
               {data.personalInfo.email && <Text>{data.personalInfo.email}</Text>}
