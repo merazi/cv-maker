@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import { ResumeForm } from './components/ResumeForm';
 import { ATSResume } from './templates/ATSResume';
+import { ATSScorecard } from './components/ATSScorecard';
 import type { ResumeData, Language } from './types/resume';
 import { FileText, Download, Eye, Edit3 } from 'lucide-react';
 import { translations } from './i18n/translations';
@@ -95,17 +96,16 @@ function App() {
 
           {/* Preview Section */}
           <Col lg={6} className={`${view === 'preview' ? 'd-block' : 'd-none'} d-lg-block`}>
-            <div className="sticky-top" style={{ top: '5rem', height: 'calc(100vh - 8rem)' }}>
-              <Card className="shadow h-100 overflow-hidden">
+            <div className="sticky-top d-flex flex-column gap-3" style={{ top: '5rem', height: 'calc(100vh - 8rem)' }}>
+              <ATSScorecard data={data} lang={lang} />
+              <Card className="shadow flex-grow-1 overflow-hidden">
                 <Card.Header className="bg-light d-flex justify-content-between align-items-center py-2 px-3">
                   <span className="text-muted small fw-bold text-uppercase tracking-wider">{t.preview}</span>
                 </Card.Header>
-                <Card.Body className="p-0 bg-secondary bg-opacity-10 overflow-auto d-flex justify-content-center">
-                  <div className="w-100 h-100 bg-white shadow" style={{ minHeight: '500px' }}>
-                    <PDFViewer width="100%" height="100%" showToolbar={false} style={{ border: 'none' }}>
-                      <ATSResume data={data} lang={lang} />
-                    </PDFViewer>
-                  </div>
+                <Card.Body className="p-0 bg-secondary bg-opacity-10 overflow-hidden">
+                  <PDFViewer width="100%" height="100%" showToolbar={false} style={{ border: 'none' }}>
+                    <ATSResume data={data} lang={lang} />
+                  </PDFViewer>
                 </Card.Body>
               </Card>
             </div>
