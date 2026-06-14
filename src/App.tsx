@@ -132,8 +132,7 @@ function App() {
 
           {/* Preview Section */}
           <Col lg={6} className={`${view === 'preview' ? 'd-block' : 'd-none'} d-lg-block`}>
-            <div className="sticky-top d-flex flex-column gap-3" style={{ top: '5rem', height: 'calc(100vh - 8rem)' }}>
-              <ATSScorecard data={data} lang={lang} />
+            <div className="sticky-top d-flex flex-column gap-3" style={{ top: '5rem', height: 'calc(125vh - 10rem)' }}>
               <Card className="shadow flex-grow-1 overflow-hidden">
                 <Card.Header className="bg-light d-flex justify-content-between align-items-center py-2 px-3">
                   <span className="text-muted small fw-bold text-uppercase tracking-wider">{t.preview}</span>
@@ -144,6 +143,7 @@ function App() {
                   </PDFViewer>
                 </Card.Body>
               </Card>
+              <ATSScorecard data={data} lang={lang} />
             </div>
           </Col>
         </Row>
