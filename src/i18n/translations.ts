@@ -43,6 +43,7 @@ export const translations: Record<Language, any> = {
     settings: 'Settings',
     language: 'Language',
     download: 'Download PDF',
+    whatIsAts: 'What is ATS?',
   },
   es: {
     title: 'Generador de CV',
@@ -86,5 +87,6 @@ export const translations: Record<Language, any> = {
     settings: 'Configuración',
     language: 'Idioma',
     download: 'Descargar PDF',
+    whatIsAts: '¿Qué es un ATS?',
   }
 };

@@ -4,7 +4,7 @@ import { ResumeForm } from './components/ResumeForm';
 import { ATSResume } from './templates/ATSResume';
 import { ATSScorecard } from './components/ATSScorecard';
 import type { ResumeData, Language } from './types/resume';
-import { FileText, Download, Eye, Edit3 } from 'lucide-react';
+import { FileText, Download, Eye, Edit3, GitBranch, Info } from 'lucide-react';
 import { translations } from './i18n/translations';
 import { Container, Navbar, Nav, Button, Row, Col, Card, ButtonGroup } from 'react-bootstrap';
 
@@ -53,6 +53,27 @@ function App() {
             </div>
             <span className="fw-bold d-none d-sm-inline">{t.title}</span>
           </Navbar.Brand>
+
+          <Nav className="me-auto d-none d-md-flex align-items-center gap-3 ms-3 ps-3 border-start">
+            <Nav.Link
+              href="https://github.com/merazi/cv-maker"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-secondary d-flex align-items-center gap-1.5 small"
+            >
+              <GitBranch size={16} />
+              <span>GitHub</span>
+            </Nav.Link>
+            <Nav.Link
+              href={lang === 'es' ? 'https://es.wikipedia.org/wiki/Sistema_de_seguimiento_de_candidatos' : 'https://en.wikipedia.org/wiki/Applicant_tracking_system'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-secondary d-flex align-items-center gap-1.5 small"
+            >
+              <Info size={16} />
+              <span>{t.whatIsAts}</span>
+            </Nav.Link>
+          </Nav>
 
           <Nav className="ms-auto d-flex flex-row align-items-center gap-2">
             {/* Mobile Toggle */}
