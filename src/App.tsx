@@ -4,9 +4,9 @@ import { ResumeForm } from './components/ResumeForm';
 import { ATSResume } from './templates/ATSResume';
 import { ATSScorecard } from './components/ATSScorecard';
 import type { ResumeData, Language } from './types/resume';
-import { FileText, Download, Eye, Edit3, GitBranch, Info } from 'lucide-react';
+import { FileText, Download, Eye, Edit3, GitBranch, Info, Globe } from 'lucide-react';
 import { translations } from './i18n/translations';
-import { Container, Navbar, Nav, Button, Row, Col, Card, ButtonGroup } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Row, Col, Card, ButtonGroup, Form } from 'react-bootstrap';
 
 const initialData: ResumeData = {
   personalInfo: {
@@ -73,6 +73,20 @@ function App() {
               <Info size={16} />
               <span>{t.whatIsAts}</span>
             </Nav.Link>
+
+            <div className="d-flex align-items-center gap-2 ms-2 ps-3 border-start">
+              <Globe size={16} className="text-secondary" />
+              <Form.Select
+                size="sm"
+                className="bg-transparent border-0 text-secondary fw-medium small"
+                style={{ width: 'auto', paddingRight: '1.5rem', cursor: 'pointer' }}
+                value={lang}
+                onChange={(e) => setLang(e.target.value as Language)}
+              >
+                <option value="en">EN</option>
+                <option value="es">ES</option>
+              </Form.Select>
+            </div>
           </Nav>
 
           <Nav className="ms-auto d-flex flex-row align-items-center gap-2">

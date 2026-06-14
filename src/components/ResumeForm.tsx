@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ResumeData, Language } from '../types/resume';
 import { translations } from '../i18n/translations';
-import { Plus, Trash2, Globe, User, Briefcase, GraduationCap, Code, Languages, Folder } from 'lucide-react';
+import { Plus, Trash2, User, Briefcase, GraduationCap, Code, Languages, Folder } from 'lucide-react';
 import { Form, Row, Col, Card, Button, InputGroup } from 'react-bootstrap';
 
 interface Props {
@@ -76,20 +76,6 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) =>
 
   return (
     <div className="pb-5">
-      {/* Language Switcher */}
-      <div className="d-flex justify-content-end align-items-center gap-2 mb-4">
-        <Globe size={18} className="text-muted" />
-        <Form.Select
-          size="sm"
-          style={{ width: 'auto' }}
-          value={lang}
-          onChange={(e) => setLang(e.target.value as Language)}
-        >
-          <option value="en">English</option>
-          <option value="es">Español</option>
-        </Form.Select>
-      </div>
-
       {/* Personal Info */}
       <Card className="mb-4 shadow-sm border-0">
         <Card.Body className="p-4">
