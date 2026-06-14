@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Font, Image } from '@react-pdf/renderer';
 import type { ResumeData, Language } from '../types/resume';
 import { translations } from '../i18n/translations';
 
@@ -23,13 +23,22 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#111',
     paddingBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  headerContent: {
+    flex: 1,
+  },
+  photo: {
+    width: 80,
+    height: 80,
+    borderRadius: 5,
+    marginLeft: 10,
   },
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000',
     marginBottom: 12,
   },
   contact: {
@@ -74,13 +83,23 @@ const styles = StyleSheet.create({
   skillsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 5,
+    gap: 10,
   },
   skillItem: {
     backgroundColor: '#f3f4f6',
     paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingVertical: 5,
     borderRadius: 3,
+    width: '48%',
+  },
+  skillName: {
+    fontWeight: 'bold',
+    fontSize: 10,
+    color: '#000',
+  },
+  skillDesc: {
+    fontSize: 9,
+    color: '#666',
   }
 });
 
@@ -91,20 +110,26 @@ interface Props {
 
 export const ATSResume = ({ data, lang }: Props) => {
   const t = translations[lang];
+  const headerColor = data.headerColor || '#000';
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.name}>{data.personalInfo.fullName}</Text>
-          <View style={styles.contact}>
-            {data.personalInfo.email && <Text>{data.personalInfo.email}</Text>}
-            {data.personalInfo.phone && <Text>{data.personalInfo.phone}</Text>}
-            {data.personalInfo.location && <Text>{data.personalInfo.location}</Text>}
-            {data.personalInfo.website && <Text>{data.personalInfo.website}</Text>}
-            {data.personalInfo.linkedin && <Text>{data.personalInfo.linkedin}</Text>}
+        <View style={[styles.header, { borderBottomColor: headerColor }]}>
+          <View style={styles.headerContent}>
+            <Text style={[styles.name, { color: headerColor }]}>{data.personalInfo.fullName}</Text>
+            <View style={styles.contact}>
+              {data.personalInfo.email && <Text>{data.personalInfo.email}</Text>}
+              {data.personalInfo.phone && <Text>{data.personalInfo.phone}</Text>}
+              {data.personalInfo.location && <Text>{data.personalInfo.location}</Text>}
+              {data.personalInfo.website && <Text>{data.personalInfo.website}</Text>}
+              {data.personalInfo.linkedin && <Text>{data.personalInfo.linkedin}</Text>}
+            </View>
           </View>
+          {data.personalInfo.photo && (
+            <Image src={data.personalInfo.photo} style={styles.photo} />
+          )}
         </View>
 
         {/* Summary */}
@@ -162,7 +187,8 @@ export const ATSResume = ({ data, lang }: Props) => {
             <View style={styles.skillsGrid}>
               {data.skills.map((skill, index) => (
                 <View key={index} style={styles.skillItem}>
-                  <Text>{skill}</Text>
+                  <Text style={styles.skillName}>{skill.name}</Text>
+                  {skill.description && <Text style={styles.skillDesc}>{skill.description}</Text>}
                 </View>
               ))}
             </View>
@@ -191,7 +217,7 @@ export const ATSResume = ({ data, lang }: Props) => {
             <Text style={styles.sectionTitle}>{t.languages}</Text>
             <View style={styles.skillsGrid}>
               {data.languages.map((langItem, index) => (
-                <View key={index} style={styles.skillItem}>
+                <View key={index} style={[styles.skillItem, { width: 'auto' }]}>
                   <Text>{langItem}</Text>
                 </View>
               ))}

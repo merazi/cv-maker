@@ -21,6 +21,17 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) =>
     }));
   };
 
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updatePersonalInfo('photo', reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const addItem = (section: 'experience' | 'education' | 'projects' | 'skills' | 'languages') => {
     if (section === 'experience') {
       setData(prev => ({
@@ -38,7 +49,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) =>
         projects: [...prev.projects, { name: '', description: '', link: '' }]
       }));
     } else if (section === 'skills') {
-      setData(prev => ({ ...prev, skills: [...prev.skills, ''] }));
+      setData(prev => ({ ...prev, skills: [...prev.skills, { name: '', description: '' }] }));
     } else if (section === 'languages') {
       setData(prev => ({ ...prev, languages: [...prev.languages, ''] }));
     }
@@ -106,6 +117,27 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) =>
                   value={data.personalInfo.email}
                   onChange={(e) => updatePersonalInfo('email', e.target.value)}
                   placeholder="john@example.com"
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.photo}</Form.Label>
+                <Form.Control
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group>
+                <Form.Label className="small fw-bold text-muted text-uppercase mb-1">{t.headerColor}</Form.Label>
+                <Form.Control
+                  type="color"
+                  value={data.headerColor || '#000000'}
+                  onChange={(e) => setData(prev => ({ ...prev, headerColor: e.target.value }))}
+                  title="Choose header color"
                 />
               </Form.Group>
             </Col>
@@ -361,25 +393,37 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang, setLang }) =>
                   <Plus size={16} />
                 </Button>
               </div>
-              <div className="d-flex flex-wrap gap-2">
+              <div className="d-flex flex-column gap-3">
                 {data.skills.map((skill, index) => (
-                  <InputGroup key={index} size="sm" style={{ width: 'auto' }}>
-                    <Form.Control
-                      type="text"
-                      value={skill}
-                      onChange={(e) => updateItem('skills', index, '', e.target.value)}
-                      placeholder="React"
-                      className="bg-light border-0"
-                      style={{ width: '80px' }}
-                    />
+                  <div key={index} className="p-2 border rounded position-relative">
                     <Button
-                      variant="light"
-                      className="border-0"
+                      variant="link"
+                      className="position-absolute top-0 end-0 text-muted p-0 me-1"
                       onClick={() => removeItem('skills', index)}
                     >
                       <Trash2 size={14} className="text-danger" />
                     </Button>
-                  </InputGroup>
+                    <Form.Group className="mb-1">
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        value={skill.name}
+                        onChange={(e) => updateItem('skills', index, 'name', e.target.value)}
+                        placeholder={t.addSkill}
+                        className="bg-light border-0 fw-bold"
+                      />
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        value={skill.description}
+                        onChange={(e) => updateItem('skills', index, 'description', e.target.value)}
+                        placeholder={t.skillDescription}
+                        className="bg-light border-0"
+                      />
+                    </Form.Group>
+                  </div>
                 ))}
               </div>
             </Card.Body>

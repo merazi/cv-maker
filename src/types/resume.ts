@@ -23,6 +23,11 @@ export interface Project {
   link: string;
 }
 
+export interface Skill {
+  name: string;
+  description: string;
+}
+
 export interface ResumeData {
   personalInfo: {
     fullName: string;
@@ -32,12 +37,14 @@ export interface ResumeData {
     website: string;
     linkedin: string;
     summary: string;
+    photo?: string;
   };
   experience: Experience[];
   education: Education[];
-  skills: string[];
+  skills: Skill[];
   languages: string[];
   projects: Project[];
+  headerColor?: string;
 }
 
 export type Language = 'en' | 'es';
