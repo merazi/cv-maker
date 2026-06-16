@@ -90,7 +90,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                   type="text"
                   value={data.personalInfo.fullName}
                   onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-                  placeholder="John Doe"
+                  placeholder={t.phFullName}
                 />
               </Form.Group>
             </Col>
@@ -101,7 +101,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                   type="email"
                   value={data.personalInfo.email}
                   onChange={(e) => updatePersonalInfo('email', e.target.value)}
-                  placeholder="john@example.com"
+                  placeholder={t.phEmail}
                 />
               </Form.Group>
             </Col>
@@ -119,7 +119,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                       <Form.Check
                         type="switch"
                         id="toggle-photo"
-                        label={lang === 'en' ? 'Show on CV' : 'Mostrar en CV'}
+                        label={t.showOnCv}
                         checked={data.personalInfo.showPhoto !== false}
                         onChange={(e) => updatePersonalInfo('showPhoto', e.target.checked)}
                         style={{ fontSize: '0.85rem' }}
@@ -195,7 +195,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                   type="text"
                   value={data.personalInfo.phone}
                   onChange={(e) => updatePersonalInfo('phone', e.target.value)}
-                  placeholder="+1 234 567 890"
+                  placeholder={t.phPhone}
                 />
               </Form.Group>
             </Col>
@@ -206,7 +206,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                   type="text"
                   value={data.personalInfo.location}
                   onChange={(e) => updatePersonalInfo('location', e.target.value)}
-                  placeholder="City, Country"
+                  placeholder={t.phLocation}
                 />
               </Form.Group>
             </Col>
@@ -217,7 +217,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                   type="text"
                   value={data.personalInfo.website}
                   onChange={(e) => updatePersonalInfo('website', e.target.value)}
-                  placeholder="https://portfolio.com"
+                  placeholder={t.phWebsite}
                 />
               </Form.Group>
             </Col>
@@ -228,7 +228,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                   type="text"
                   value={data.personalInfo.linkedin}
                   onChange={(e) => updatePersonalInfo('linkedin', e.target.value)}
-                  placeholder="linkedin.com/in/johndoe"
+                  placeholder={t.phLinkedin}
                 />
               </Form.Group>
             </Col>
@@ -240,7 +240,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                   rows={3}
                   value={data.personalInfo.summary}
                   onChange={(e) => updatePersonalInfo('summary', e.target.value)}
-                  placeholder="A brief overview of your professional background..."
+                  placeholder={t.phSummary}
                   style={{ resize: 'none' }}
                 />
               </Form.Group>
@@ -500,7 +500,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                       type="text"
                       value={langItem}
                       onChange={(e) => updateItem('languages', index, '', e.target.value)}
-                      placeholder="English"
+                      placeholder={t.phLanguage}
                       className="bg-light border-0"
                       style={{ width: '80px' }}
                     />
@@ -563,7 +563,7 @@ export const ResumeForm: React.FC<Props> = ({ data, setData, lang }) => {
                         type="text"
                         value={project.link}
                         onChange={(e) => updateItem('projects', index, 'link', e.target.value)}
-                        placeholder="https://github.com/..."
+                        placeholder={t.phProjectLink}
                       />
                     </Form.Group>
                   </Col>

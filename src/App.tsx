@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import { ResumeForm } from './components/ResumeForm';
 import { ATSResume } from './templates/ATSResume';
 import { ATSScorecard } from './components/ATSScorecard';
 import type { ResumeData, Language } from './types/resume';
-import { FileText, Download, Eye, Edit3, GitBranch, Info, Globe } from 'lucide-react';
+import { FileText, Download, Eye, Edit3, GitBranch, Info, Globe, Upload, FileJson } from 'lucide-react';
 import { translations } from './i18n/translations';
 import { Container, Navbar, Nav, Button, Row, Col, Card, ButtonGroup, Form } from 'react-bootstrap';
 
@@ -37,6 +37,37 @@ function App() {
   const [lang, setLang] = useState<Language>('en');
   const [view, setView] = useState<'edit' | 'preview'>('edit');
   const t = translations[lang];
+  const importInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExportJson = () => {
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const filename = `resume_${data.personalInfo.fullName.replace(/\s+/g, '_') || 'data'}.json`;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleImportJson = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const parsed = JSON.parse(ev.target?.result as string) as ResumeData;
+        if (!parsed.personalInfo) throw new Error('Invalid structure');
+        setData(parsed);
+      } catch {
+        alert(t.importJsonError);
+      }
+    };
+    reader.readAsText(file);
+    // Reset so the same file can be re-imported
+    e.target.value = '';
+  };
 
   useEffect(() => {
     localStorage.setItem('resume-data', JSON.stringify(data));
@@ -107,6 +138,36 @@ function App() {
                 <Eye size={18} />
               </Button>
             </ButtonGroup>
+
+            {/* JSON Import */}
+            <input
+              ref={importInputRef}
+              type="file"
+              accept=".json,application/json"
+              onChange={handleImportJson}
+              style={{ display: 'none' }}
+              id="json-import-input"
+            />
+            <Button
+              variant="outline-secondary"
+              className="d-flex align-items-center gap-2 fw-semibold"
+              onClick={() => importInputRef.current?.click()}
+              title={t.importJson}
+            >
+              <Upload size={18} />
+              <span className="d-none d-md-inline">{t.importJson}</span>
+            </Button>
+
+            {/* JSON Export */}
+            <Button
+              variant="outline-secondary"
+              className="d-flex align-items-center gap-2 fw-semibold"
+              onClick={handleExportJson}
+              title={t.exportJson}
+            >
+              <FileJson size={18} />
+              <span className="d-none d-md-inline">{t.exportJson}</span>
+            </Button>
 
             <PDFDownloadLink
               document={<ATSResume data={data} lang={lang} />}
