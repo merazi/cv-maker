@@ -48,6 +48,8 @@ export const translations: Record<Language, any> = {
     exportJson: 'Export JSON',
     importJson: 'Import JSON',
     importJsonError: 'Invalid JSON file. Please select a valid resume file.',
+    refreshPreview: 'Refresh Preview',
+    upToDate: 'Up to date',
     // Placeholders
     phFullName: 'John Doe',
     phEmail: 'john@example.com',
@@ -106,6 +108,8 @@ export const translations: Record<Language, any> = {
     exportJson: 'Exportar JSON',
     importJson: 'Importar JSON',
     importJsonError: 'Archivo JSON inválido. Por favor selecciona un archivo de CV válido.',
+    refreshPreview: 'Actualizar Vista Previa',
+    upToDate: 'Al día',
     // Placeholders
     phFullName: 'Juan Pérez',
     phEmail: 'juan@ejemplo.com',

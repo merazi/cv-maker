@@ -4,7 +4,7 @@ import { ResumeForm } from './components/ResumeForm';
 import { ATSResume } from './templates/ATSResume';
 import { ATSScorecard } from './components/ATSScorecard';
 import type { ResumeData, Language } from './types/resume';
-import { FileText, Download, Eye, Edit3, GitBranch, Info, Globe, Upload, FileJson } from 'lucide-react';
+import { FileText, Download, Eye, Edit3, GitBranch, Info, Globe, Upload, FileJson, RefreshCw } from 'lucide-react';
 import { translations } from './i18n/translations';
 import { Container, Navbar, Nav, Button, Row, Col, Card, ButtonGroup, Form } from 'react-bootstrap';
 
@@ -36,8 +36,15 @@ function App() {
   });
   const [lang, setLang] = useState<Language>('en');
   const [view, setView] = useState<'edit' | 'preview'>('edit');
+  const [previewData, setPreviewData] = useState<ResumeData>(data);
+  const [hasChanges, setHasChanges] = useState(false);
   const t = translations[lang];
   const importInputRef = useRef<HTMLInputElement>(null);
+
+  const handleRefreshPreview = () => {
+    setPreviewData(data);
+    setHasChanges(false);
+  };
 
   const handleExportJson = () => {
     const json = JSON.stringify(data, null, 2);
@@ -71,6 +78,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('resume-data', JSON.stringify(data));
+    setHasChanges(true);
   }, [data]);
 
   return (
@@ -170,8 +178,8 @@ function App() {
             </Button>
 
             <PDFDownloadLink
-              document={<ATSResume data={data} lang={lang} />}
-              fileName={`resume_${data.personalInfo.fullName.replace(/\s+/g, '_') || 'generator'}.pdf`}
+              document={<ATSResume data={previewData} lang={lang} />}
+              fileName={`resume_${previewData.personalInfo.fullName.replace(/\s+/g, '_') || 'generator'}.pdf`}
             >
               {({ loading }) => (
                 <Button variant="primary" className="d-flex align-items-center gap-2 fw-semibold shadow-sm">
@@ -197,14 +205,24 @@ function App() {
               <Card className="shadow flex-grow-1 overflow-hidden">
                 <Card.Header className="bg-light d-flex justify-content-between align-items-center py-2 px-3">
                   <span className="text-muted small fw-bold text-uppercase tracking-wider">{t.preview}</span>
+                  <Button
+                    variant={hasChanges ? 'warning' : 'outline-secondary'}
+                    size="sm"
+                    className="d-flex align-items-center gap-2 fw-semibold"
+                    onClick={handleRefreshPreview}
+                    title={t.refreshPreview}
+                  >
+                    <RefreshCw size={14} />
+                    <span>{hasChanges ? t.refreshPreview : t.upToDate}</span>
+                  </Button>
                 </Card.Header>
                 <Card.Body className="p-0 bg-secondary bg-opacity-10 overflow-hidden">
                   <PDFViewer width="100%" height="100%" showToolbar={false} style={{ border: 'none' }}>
-                    <ATSResume data={data} lang={lang} />
+                    <ATSResume data={previewData} lang={lang} />
                   </PDFViewer>
                 </Card.Body>
               </Card>
-              <ATSScorecard data={data} lang={lang} />
+              <ATSScorecard data={previewData} lang={lang} />
             </div>
           </Col>
         </Row>
